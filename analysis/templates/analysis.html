@@ -1,0 +1,571 @@
+<html data-theme="dark">
+<head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="shortcut icon" href="{% static 'img/gavel.png' type='image/png' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/analysis.css' %}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <!-- icons -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <title>PolitiStats</title>
+</head>
+
+<style>.changes-color:hover {
+}</style>
+
+<body style="background-color: rgba(0, 0, 0, 0.9);">
+
+<nav id="nav" class="navbar sticky-top navbar-expand-lg" style="padding: .5rem 1rem;">
+    <a class="navbar-brand" href={% url "home" %}><h1 class="webpageTitle">PolitiStats</h1></a>
+    <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto" style="margin-right: -10px;">
+            <li class="nav-item active">
+                <a class="nav-link navlink" href={% url "home" %}>Search by State <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item item">
+                <a class="nav-link navlink" href={% url "dashboard" %}>Search by Name</a>
+            </li>
+            <li class="nav-item item">
+                <a class="nav-link navlink" href={% url "about" %}>About</a>
+            </li>
+            <li class="nav-item item">
+                <a class="nav-link navlink" href={% url "contact" %}>Contact</a>
+            </li>
+        </ul>
+    </div>
+    <i class="fa fa-moon-o" aria-hidden="true" style="margin-right: 5px;"></i>
+    <div class="toggle-container">
+        <input type="checkbox" id="switch" name="theme"/><label id="toggle" for="switch"></label>
+    </div>
+    <i class="fa fa-sun-o" aria-hidden="true" style="margin: 5px;"></i>
+</nav>
+
+<div class="profile container">
+    <div class="info row" style="max-height: fit-content;">
+        <div class="col" style="text-align: center;">
+            <!--<img class="image center" src="{% static 'img/img.png' type='img/png' %}" width="230" height="230">-->
+            <img class="image center" src={{ person_image }} height="230">
+
+            <h2 class="name">{{ person_selected }}</h2>
+        </div>
+        <div class="col">
+            <div class="bio" style="max-height: fit-content; max-width: fit-content;">
+                <details>
+                    <summary><h2 id="bio1"
+                                                     style="font-size:15px">{{ person_details_1 }}</h2>
+                    </summary>
+                    <h2 id="bio2" style="font-size:15px">{{ person_details_2 }}</h2>
+                </details>
+            </div>
+            <!--Font change button learned from https://www.w3schools.com/jsref/prop_style_fontsize.asp -->
+
+            <button style="color: var(color--text) !important; background-color: var(color--text) !important; font-size: small;" onclick="midFont()">A
+            </button>
+            <button style="color: var(color--text) !important; background-color: var(color--text) !important; font-size: medium;" onclick="largeFont()">A
+            </button>
+            <button style=" color: var(color--text) !important; background-color: var(color--text) !important;font-size: large;" onclick="xxlargeFont()">A
+            </button>
+            <script>
+                function midFont() {
+                    document.getElementById("bio1").style.fontSize = "small";
+                    document.getElementById("bio2").style.fontSize = "small";
+
+                    document.getElementById("twitterSentimentTitle").style.fontSize = "small";
+                    document.getElementById("twitterSentimentValue").style.fontSize = "small";
+
+                    document.getElementById("twitterSentimentTitle2").style.fontSize = "small";
+                    document.getElementById("twitterSentimentValue2").style.fontSize = "small";
+
+                    document.getElementById("newsSentimentTitle").style.fontSize = "small";
+                    document.getElementById("newsSentimentValue").style.fontSize = "small";
+
+                    document.getElementById("newsSentimentTitle2").style.fontSize = "small";
+                    document.getElementById("latestNews").style.fontSize = "small";
+                }
+
+                function largeFont() {
+                    document.getElementById("bio1").style.fontSize = "medium";
+                    document.getElementById("bio2").style.fontSize = "medium";
+
+                    document.getElementById("twitterSentimentTitle").style.fontSize = "medium";
+                    document.getElementById("twitterSentimentValue").style.fontSize = "medium";
+
+                    document.getElementById("twitterSentimentTitle2").style.fontSize = "medium";
+                    document.getElementById("twitterSentimentValue2").style.fontSize = "medium";
+
+                    document.getElementById("newsSentimentTitle").style.fontSize = "medium";
+                    document.getElementById("newsSentimentValue").style.fontSize = "medium";
+
+                    document.getElementById("newsSentimentTitle2").style.fontSize = "medium";
+                    document.getElementById("latestNews").style.fontSize = "medium";
+                }
+
+                function xxlargeFont() {
+                    document.getElementById("bio1").style.fontSize = "large";
+                    document.getElementById("bio2").style.fontSize = "large";
+
+                    document.getElementById("twitterSentimentTitle").style.fontSize = "large";
+                    document.getElementById("twitterSentimentValue").style.fontSize = "large";
+
+                    document.getElementById("twitterSentimentTitle2").style.fontSize = "large";
+                    document.getElementById("twitterSentimentValue2").style.fontSize = "large";
+
+                    document.getElementById("newsSentimentTitle").style.fontSize = "large";
+                    document.getElementById("newsSentimentValue").style.fontSize = "large";
+
+                    document.getElementById("newsSentimentTitle2").style.fontSize = "large";
+                    document.getElementById("latestNews").style.fontSize = "large";
+                }
+            </script>
+        </div>
+    </div>
+    <div class="info row">
+        <div class="col">
+            <div class="twitterSentiment container rounded" style="max-height: fit-content; max-width: fit-content;">
+                <h2 id = "twitterSentimentTitle" class="boxTitle">Twitter Sentiment - Last 7 Days</h2>
+                <h3 id = "twitterSentimentValue" class="boxSubtitle" style="color: var(--color-text) !important;">Average: {{ sentiment_tweets }}</h3>
+
+                <div class="chart-container">
+                    <canvas id="twitterWeek" width="750" height="750" class="chartjs-render-monitor"
+                            style="display: block; height: 325px; width: 325px;"></canvas>
+                    <script>
+                        const ctx = document.getElementById("twitterWeek").getContext('2d');
+                        ctx.canvas.width = 325;
+                        ctx.canvas.height = 325;
+                        //line
+                        var myLineChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: ['6', '5', '4', '3', '2', '1', '0'],
+                                datasets: [{
+                                    label: 'Average Sentiment',
+                                    data: {{mentions_timeline}},
+                                    backgroundColor: [
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)',
+                                        'rgba(230, 109, 95, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(255, 159, 64, 1)',
+                                        'rgba(230, 109, 95, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }
+                                ]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: true,
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            max: 5,
+                                            min: -5,
+                                            stepSize: 1
+                                        },
+                                        scaleLabel: {
+                                            display: true,
+                                            labelString: 'Sentiment Score'
+                                        }
+                                    }]
+                                    ,
+                                    xAxes: [{
+                                        scaleLabel: {
+                                            display: true,
+                                            labelString: 'Number of Days Back'
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+
+
+                    </script>
+                </div>
+
+                <h3 class="footer" style="font-size: 10px;
+                                                color: lightgray;
+                                                text-align: center;
+                                                color: var(--color-text) !important;">Aggregated data for Tweets mentioning this user,
+                    within the last 7 days.</h3>
+
+            </div>
+        </div>
+        <div class="col">
+            <div class="twitterSentiment container rounded" style="max-height: fit-content; max-width: fit-content;">
+                <h2 id = "twitterSentimentTitle2" class="boxTitle">Twitter Sentiment</h2>
+                <h3 id = "twitterSentimentValue2" class="boxSubtitle" style="color: var(--color-text) !important;">Last 2 Days</h3>
+                <div class="chart-container">
+                    <canvas id="twitterWeek2" width="750" height="750" class="chartjs-render-monitor"
+                            style="display: block; height: 325px; width: 325px;"></canvas>
+                    <script>
+                        var ctxl = document.getElementById('twitterWeek2').getContext('2d');
+                        ctxl.canvas.width = 325;
+                        ctxl.canvas.height = 325;
+                        var myChar = new Chart(ctxl, {
+                            type: 'horizontalBar',
+                            data: {
+                                labels: ['Yesterday', 'Today'],
+                                datasets: [{
+                                    label: 'Average Sentiment',
+                                    data: [{{ mentions_timeline }}[0], {{ mentions_timeline }}[1]],
+
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(75, 192, 192, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: false,
+                                maintainAspectRatio: true,
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }],
+                                    xAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        },
+                                            scaleLabel: {
+                                            display: true,
+                                            labelString: 'Sentiment Score'
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    </script>
+                </div>
+                <h3 class="footer" style="font-size: 10px;
+                                                color: lightgray;
+                                                text-align: center;
+                                                color: var(--color-text) !important;">Aggregated data for Tweets mentioning this user,
+                    within the last 2 days.</h3>
+            </div>
+        </div>
+        <div class="col">
+            <div class="twitterSentiment container rounded overflow-auto"
+                 style="max-height: 435px; max-width: fit-content;">
+                <h2 id = "latestTweets" class="boxTitle">Latest Tweets</h2>
+                <div class="tweets container">
+                    <div class="row" style="max-width: 300px;">
+
+                        {% for tweet in user_tweets %}
+                            <div class="twitterSentiment container rounded"
+                                 style="max-height: fit-content; max-width: fit-content; margin-top: 10px">
+                                <div class="row">
+                                    <div class="col">
+                                        <h3 class="name" style="text-align: left;
+                                                                        font-size: small;
+                                                                        font-weight: bold;
+                                                                        padding: 5px;
+                                                                        font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial;">{{ tweet.Name }}</h3>
+                                    </div>
+                                    <div class="col">
+                                        <h3 class="handle" style="text-align: right;
+                                                                            color: var(color--text);
+                                                                            font-size: small;
+                                                                            padding: 5px;">@{{ tweet.Handle }}</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h3 class="text" style="font-size: small;
+                                                                        text-align: center;">{{ tweet.Text }}</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h3 class="retweets" style="font-size: small;
+                                                                        color: var(color--text) !important; 
+                                                                        text-align: right;
+                                                                        padding: 0px 10px;"><i class="fa fa-retweet"></i> {{ tweet.Retweets }}</h3>
+                                    </div>
+                                    <div class="col">                                        
+                                        <h3 class="likes" style="font-size: small;
+                                                                        color: var(color--text) !important; 
+                                                                        text-align: left;
+                                                                        padding: 0px 10px;"><i class="fa fa-heart"></i> {{ tweet.Favorites }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info row">
+        <div class="col">
+            <div class="newsSentiment container rounded" style="max-height: fit-content; max-width: fit-content;">
+                <h2 id = "newsSentimentTitle" class="boxTitle">News Sentiment - Last 7 Days</h2>
+                <h3 id = "newsSentimentValue" class="boxSubtitle" style="color: var(--color-text) !important;">Average: {{ sentiment_news }}</h3>
+
+                <div class="chart-container">
+                    <canvas id="newsWeek" width="750" height="750" class="chartjs-render-monitor"
+                            style="display: block;height: 325px;width: 325px;"></canvas>
+                    <script>
+                        var ctxl = document.getElementById('newsWeek').getContext('2d');
+                        ctxl.canvas.width = 325;
+                        ctxl.canvas.height = 325;
+
+                        var myChart = new Chart(ctxl, {
+                            type: 'line',
+                            data: {
+                                labels: ['6', '5', '4', '3', '2', '1', '0'],
+                                datasets: [{
+                                    label: 'Average Sentiment',
+                                    data: {{ news_timeline }},
+                                    backgroundColor: [
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)',
+                                        'rgba(230, 109, 95, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(255, 159, 64, 1)',
+                                        'rgba(230, 109, 95, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: false,
+                                maintainAspectRatio: true,
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            max: 1,
+                                            min: -1,
+                                            stepSize: 0.1
+                                        },
+                                        scaleLabel: {
+                                            display: true,
+                                            labelString: 'Sentiment Score'
+                                        }
+                                    }]
+                                    ,
+                                    xAxes: [{
+                                        scaleLabel: {
+                                            display: true,
+                                            labelString: 'Number of Days Back'
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    </script>
+                </div>
+                <h3 class="footer" style="font-size: 10px;
+                                                color: lightgray;
+                                                text-align: center;
+                                                color: var(--color-text) !important;">Aggregated data for News mentioning this user,
+                    within the last 7 days.</h3>
+            </div>
+        </div>
+        <div class="col">
+            <div class="newsSentiment container rounded" style="max-height: fit-content; max-width: fit-content;">
+                <h2 id = "newsSentimentTitle2" class="boxTitle">News Sentiment</h2>
+                <h3 id = "twitterSentimentValue2" class="boxSubtitle" style="color: var(--color-text) !important;">Last 2 Days</h3>
+                <div class="chart-container">
+                    <canvas id="newsWeek2" width="750" height="750" class="chartjs-render-monitor"
+                            style="display: block; height: 325px; width: 325px;"></canvas>
+                    <script>
+                        var ctxll = document.getElementById('newsWeek2').getContext('2d');
+                        ctxll.canvas.width = 325;
+                        ctxll.canvas.height = 325;
+                        var myChart = new Chart(ctxll, {
+                            type: 'horizontalBar',
+                            data: {
+                                labels: ['Yesterday', 'Today'],
+                                datasets: [{
+                                    label: 'Average Sentiment',
+                                    data: [{{ news_timeline }}[0], {{ news_timeline }}[1]],
+
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(75, 192, 192, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: false,
+                                maintainAspectRatio: true,
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }],
+                                    xAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        },
+                                            scaleLabel: {
+                                            display: true,
+                                            labelString: 'Sentiment Score'
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    </script>
+                </div>
+                <h3 class="footer" style="font-size: 10px;
+                                                color: lightgray;
+                                                text-align: center;
+                                                color: var(--color-text) !important;">Aggregated data for News mentioning this user,
+                    within the last 2 days.</h3>
+            </div>
+        </div>
+        <div class="col">
+            <div class="newsSentiment container rounded overflow-auto" style="max-height: 435px; max-width: fit-content;">
+                <h2 id = "latestNews" class="boxTitle">Latest News</h2>
+                <div class="tweets container">
+                    <div class="row" style="max-width: 325px;">
+
+                        {% for article in news_articles %}
+                            <div class="twitterSentiment container rounded"
+                                 style="max-height: fit-content; max-width: fit-content; margin-top: 10px">
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="{{article.URL}}"><h3 class="name" style="text-align: center;
+                                                                        font-size: small;
+                                                                        font-weight: bold;
+                                                                        padding: 5px;
+                                                                        font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial;">{{ article.Title }}</h3></a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h3 class="text" style="font-size: small;
+                                                                        color: var(color--text);
+                                                                        text-align: center;
+                                                                        padding: 0px 7px;
+                                                                        font-style: italic">{{ article.Source }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="info row">
+        <div class="col">
+            <div class="socials">
+            </div>
+        </div>
+        <div class="col">
+            <div class="socials">
+                <div class="newsSentiment container rounded" style="max-height: fit-content; max-width: fit-content;">
+                    <h2 class="boxTitle">Social Media Links</h2>
+                    <div class="row">
+                        <div class="col" style="text-align: center;">
+                            <a href={{ twitter_link }} target="_blank"><i class="fa fa-twitter fa-2x" aria-hidden="true"
+                                                                          style="color: var(--color-text) !important;"></i></a>
+                            <!--paste link where "google.com" is-->
+                        </div>
+                        <div class="col" style="text-align: center;">
+                            <a href={{ facebook_link }} target="_blank"><i class="fa fa-facebook-official fa-2x"
+                                                                           aria-hidden="true"
+                                                                           style="color: var(--color-text) !important;"></i></a>
+
+                        </div>
+                        <div class="col" style="text-align: center;">
+                            <a href={{ youtube_link }} target="_blank"><i class="fa fa-youtube-play fa-2x"
+                                                                          aria-hidden="true" style="color: var(--color-text) !important;"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="socials">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<h4 class="copyright" style="position: static;">Copyright &copy; 2020 PolitiStats. All rights reserved.</h4>
+<script src="https://use.fontawesome.com/a7963882bf.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+
+<!--Dark mode learned from https://youtu.be/ZKXv_ZHQ654-->
+<script>
+    var checkbox = document.querySelector('input[name=theme]');
+
+    checkbox.addEventListener('change', function () {
+        if (this.checked) {
+            trans()
+            document.documentElement.setAttribute('data-theme', 'light')
+        } else {
+            trans()
+            document.documentElement.setAttribute('data-theme', 'dark')
+        }
+    })
+    let trans = () => {
+        document.documentElement.classList.add('transition');
+        window.setTimeout(() => {
+            document.documentElement.classList.remove('transition')
+        }, 1000)
+    }
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,162 @@
+body{
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+#nav{
+    background-color: #272727 !important;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    padding: 20px;
+}
+
+.webpageTitle{
+    padding: 2px;
+    color: white;
+    font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial;
+    font-weight: bold;
+    font-size: 30;
+    letter-spacing: 1px;
+}
+
+.navbar-toggler-icon{
+    color: white;
+}
+
+.navlink{
+    letter-spacing: 1px;
+    padding: 0px 25px !important;
+    color: white !important;
+}
+
+.info{
+    margin-top: 50px;
+}
+
+.image{
+    text-align: center;
+    border-radius: 100%;
+}
+
+.center{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.name{
+    color: white;
+    font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    padding-top: 20px;
+}
+
+.boxTitle{
+    color: white;
+    font-size: large;
+    padding: 10px 5px 0px 5px;
+}
+
+.boxSubtitle{
+    color: white;
+    font-size: medium;
+    padding: 0px 5px;
+}
+
+.twitterSentiment, .newsSentiment{
+    background-color: #272727 !important;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 100%;
+    border-radius: 2px;
+    padding-bottom: 10px;
+}
+
+
+.copyright{
+    position: static; 
+    bottom: 0px; 
+    width: 100%; 
+    text-align: center; 
+    color: gray; 
+    font-size: 10px;
+}
+
+.stateSubtitle{
+    color: var(--color-text);
+}
+
+
+input[type=checkbox]{
+	height: 0;
+	width: 0;
+    visibility: hidden;
+}
+
+#toggle{
+	cursor: pointer;
+	text-indent: -9999px;
+	width: 52px;
+	height: 27px;
+	background: grey;
+	float: right;
+	border-radius: 100px;
+    position: relative;
+    float: right;
+    margin-bottom: -1px !important; 
+}
+
+label:after {
+	content: '';
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	width: 20px;
+	height: 20px;
+	background: #fff;
+	border-radius: 90px;
+    transition: 0.3s;
+    margin-bottom: -1px !important; 
+}
+
+input:checked + label {
+	background: #866BBB;
+}
+
+input:checked + label:after {
+	left: calc(100% - 5px);
+	transform: translateX(-100%);
+}
+
+label:active:after {
+	width: 45px;
+}
+html.transition,
+html.transition *,
+html.transition *:before,
+html.transition *:after {
+  transition: all 750ms !important;
+  transition-delay: 0 !important;
+}
+
+/* total width */
+::-webkit-scrollbar {
+    /*background-color: #fff;*/
+    background: transparent;
+    width: 10px;
+}
+
+/* background of the scrollbar except button or resizer */
+::-webkit-scrollbar-track {
+    /*background-color: #fff;*/
+    background: transparent;
+}
+
+/* scrollbar itself */
+::-webkit-scrollbar-thumb {
+    background-color: #babac0;
+    border-radius: 16px;
+}
+
+/* set button(top and bottom of the scrollbar) */
+::-webkit-scrollbar-button {
+    display:none;
+}
+

@@ -1,0 +1,28 @@
+html{
+    --bg: rgba(0, 0, 0, 0.9);
+    --color-text: white;
+    --nav-color: 272727;
+
+}
+
+html[data-theme ='light']{
+    --bg: white;
+    --color-text: rgba(0, 0, 0, 0.9);
+    --nav-color: #EBEBEB;
+}
+
+body{
+    background-color: var(--bg) !important;
+    color: var(--color-text) !important;
+}
+
+#nav{
+    background-color: var(--nav-color) !important;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.navlink{
+    letter-spacing: 1px;
+    padding: 0px 25px !important;
+    color: white !important;
+}
